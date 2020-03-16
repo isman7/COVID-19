@@ -61,12 +61,12 @@ def plot_country(country: str, ax: plt.Axes, marker: str):
     deaths[country].plot.line(ax=ax, marker=marker, linewidth=0, label=f"{country}: Deaths", color="red")
 
 
-# country = "China"
+country = "China"
 # country = "Italy"
 # country = "Iran"
 # country = "Spain"
 # country = "Korea, South"
-country = "World wo/ China"
+# country = "World wo/ China"
 
 fig: plt.Figure = plt.figure()
 ax: plt.Axes = fig.add_subplot(111)
@@ -84,8 +84,8 @@ p_opt_confirmed, p_cov_confirmed = curve_fit(
     confirmed[country].values,
     p0=p0,
     maxfev=2000,
-    # bounds=([0, 0, 4], [100000, 100, 5]),
-    # bounds=(0, [100000, 100, 100]),
+    # bounds=([0, 0, 4], [100000, 100, 5]),  # Run with Spain, France, Germany
+    # bounds=(0, [100000, 100, 100]),  # Run with Spain, France, Germany
 )
 
 b_opt_confirmed = pd.Series(boltzmann_min_0(x2, *p_opt_confirmed), index=long_index)
@@ -99,7 +99,7 @@ p_opt_deaths, p_cov_deaths = curve_fit(
     deaths[country].values,
     p0=p0,
     maxfev=2000,
-    # bounds=(0, [4000, 100, 100]),
+    # bounds=(0, [4000, 100, 100]),  # Run with Spain, France, Germany
 )
 
 b_opt_deaths = pd.Series(boltzmann_min_0(x2, *p_opt_deaths), index=long_index)
